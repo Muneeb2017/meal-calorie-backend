@@ -1,9 +1,9 @@
-const { body, validationResult } = require('express-validator');
+import { body, validationResult } from 'express-validator';
 
 /**
  * Validation rules for user registration
  */
-const validateRegistration = [
+export const validateRegistration = [
   body('firstName')
     .trim()
     .isLength({ min: 2, max: 50 })
@@ -33,7 +33,7 @@ const validateRegistration = [
 /**
  * Validation rules for user login
  */
-const validateLogin = [
+export const validateLogin = [
   body('email')
     .isEmail()
     .normalizeEmail()
@@ -47,7 +47,7 @@ const validateLogin = [
 /**
  * Validation rules for calorie request
  */
-const validateCalorieRequest = [
+export const validateCalorieRequest = [
   body('dish_name')
     .trim()
     .isLength({ min: 2, max: 100 })
@@ -63,7 +63,7 @@ const validateCalorieRequest = [
 /**
  * Middleware to handle validation errors
  */
-const handleValidationErrors = (req, res, next) => {
+export const handleValidationErrors = (req, res, next) => {
   const errors = validationResult(req);
   
   if (!errors.isEmpty()) {
@@ -81,11 +81,4 @@ const handleValidationErrors = (req, res, next) => {
   }
   
   next();
-};
-
-module.exports = {
-  validateRegistration,
-  validateLogin,
-  validateCalorieRequest,
-  handleValidationErrors
 };

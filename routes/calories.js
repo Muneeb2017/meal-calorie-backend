@@ -1,13 +1,22 @@
-const express = require('express');
-const usdaService = require('../services/usdaService');
-const { authenticate } = require('../middleware/auth');
-const { asyncHandler } = require('../middleware/errorHandler');
-const {
+import express from 'express';
+import usdaService from '../services/usdaService.js';
+import { authenticate } from '../middleware/auth.js';
+import { asyncHandler } from '../middleware/errorHandler.js';
+import {
   validateCalorieRequest,
   handleValidationErrors
-} = require('../middleware/validation');
+} from '../middleware/validation.js';
+import rateLimit from 'express-rate-limit';
 
 const router = express.Router();
+
+const strictLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 15, // Limit each IP to 15 requests per windowMs for API calls
+  message: {
+    error: 'Rate limit exceeded. Maximum 15 requests per 15 minutes.'
+  }
+});
 
 /**
  * @route   POST /get-calories
@@ -16,6 +25,7 @@ const router = express.Router();
  */
 router.post('/get-calories',
   authenticate, // Require authentication
+  strictLimiter, // Add rate limiter here
   validateCalorieRequest,
   handleValidationErrors,
   asyncHandler(async (req, res) => {
@@ -58,4 +68,4 @@ router.post('/get-calories',
   })
 );
 
-module.exports = router;
+export default router;

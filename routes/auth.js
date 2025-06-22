@@ -1,11 +1,11 @@
-const express = require('express');
-const User = require('../models/User');
-const { asyncHandler } = require('../middleware/errorHandler');
-const {
+import express from 'express';
+import User from '../models/User.js';
+import { asyncHandler } from '../middleware/errorHandler.js';
+import {
   validateRegistration,
   validateLogin,
   handleValidationErrors
-} = require('../middleware/validation');
+} from '../middleware/validation.js';
 
 const router = express.Router();
 
@@ -102,4 +102,4 @@ router.post('/login',
   })
 );
 
-module.exports = router;
+export default router;

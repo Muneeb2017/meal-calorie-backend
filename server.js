@@ -1,14 +1,14 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
-require('dotenv').config();
+import express, { json, urlencoded } from 'express';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
+import 'dotenv/config';
 
-const authRoutes = require('./routes/auth');
-const calorieRoutes = require('./routes/calories');
-const { errorHandler } = require('./middleware/errorHandler');
-const { connectDB } = require('./config/database');
+import authRoutes from './routes/auth.js';
+import calorieRoutes from './routes/calories.js';
+import { errorHandler } from './middleware/errorHandler.js';
+import { connectDB } from './config/database.js';
 
 const app = express();
 
@@ -40,11 +40,10 @@ const strictLimiter = rateLimit({
 });
 
 app.use(limiter);
-app.use('/get-calories', strictLimiter);
 
 // Body parsing middleware
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true }));
+app.use(json({ limit: '10mb' }));
+app.use(urlencoded({ extended: true }));
 
 // Health check endpoint
 app.get('/health', (req, res) => {
@@ -57,7 +56,7 @@ app.get('/health', (req, res) => {
 
 // Routes
 app.use('/auth', authRoutes);
-app.use('/', calorieRoutes);
+app.use('/calories', calorieRoutes);
 
 // 404 handler
 app.use('*', (req, res) => {
@@ -76,4 +75,4 @@ app.listen(PORT, () => {
   console.log(` Server running on port ${PORT} in ${process.env.NODE_ENV} mode`);
 });
 
-module.exports = app;
+export default app;

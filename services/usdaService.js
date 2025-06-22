@@ -1,6 +1,6 @@
 import 'dotenv/config';
 
-import { get } from 'axios';
+import axios  from 'axios';
 import NodeCache from 'node-cache';
 import Fuse from 'fuse.js';
 
@@ -34,12 +34,12 @@ class USDAService {
         return cachedResult;
       }
 
-      const response = await get(`${this.baseURL}/foods/search`, {
+      const response = await axios.get(`${this.baseURL}/foods/search`, {
         params: {
           query: query.trim(),
           api_key: this.apiKey,
           pageSize,
-          dataType: ['Foundation', 'SR Legacy', 'Survey (FNDDS)']
+          // dataType: ['Foundation', 'SR Legacy', 'Survey (FNDDS)']
         },
         timeout: 10000 // 10 second timeout
       });
@@ -130,7 +130,6 @@ class USDAService {
       );
 
       if (energyNutrient && energyNutrient.value) {
-        // USDA typically provides calories per 100g
         return parseFloat(energyNutrient.value);
       }
 
@@ -193,4 +192,5 @@ class USDAService {
   }
 }
 
-export default new USDAService();
+const usdaService = new USDAService();
+export default usdaService;

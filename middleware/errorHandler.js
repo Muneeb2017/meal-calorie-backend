@@ -5,7 +5,7 @@
  * @param {Object} res - Express response object
  * @param {Function} next - Express next function
  */
-const errorHandler = (err, req, res, next) => {
+export const errorHandler = (err, req, res, next) => {
     let error = { ...err };
     error.message = err.message;
   
@@ -58,8 +58,6 @@ const errorHandler = (err, req, res, next) => {
   /**
    * Async error wrapper to catch async/await errors
    */
-  const asyncHandler = (fn) => (req, res, next) => {
+  export const asyncHandler = (fn) => (req, res, next) => {
     Promise.resolve(fn(req, res, next)).catch(next);
   };
-  
-  module.exports = { errorHandler, asyncHandler };

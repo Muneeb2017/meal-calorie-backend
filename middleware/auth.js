@@ -1,5 +1,5 @@
-const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+import jwt from 'jsonwebtoken';
+import User from '../models/User.js';
 
 /**
  * Authentication middleware to verify JWT tokens
@@ -7,7 +7,7 @@ const User = require('../models/User');
  * @param {Object} res - Express response object
  * @param {Function} next - Express next function
  */
-const authenticate = async (req, res, next) => {
+export const authenticate = async (req, res, next) => {
   try {
     const authHeader = req.header('Authorization');
     
@@ -56,5 +56,3 @@ const authenticate = async (req, res, next) => {
     });
   }
 };
-
-module.exports = { authenticate };
