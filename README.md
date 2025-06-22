@@ -54,8 +54,8 @@ A professional Node.js backend service that provides calorie information for dis
    ```env
    NODE_ENV=development
    PORT=3000
-   MONGODB_URI=mongodb://localhost:27017/calorie-tracker
-   JWT_SECRET=your-super-secret-jwt-key-here-make-it-long-and-random
+   MONGODB_URI=mongodb://localhost:27017/calorietracker
+   JWT_SECRET=somerandomslongstring!!!
    JWT_EXPIRES_IN=7d
    USDA_API_KEY=your-usda-api-key-here
    USDA_API_BASE_URL=https://api.nal.usda.gov/fdc/v1
@@ -170,13 +170,3 @@ GET /health
   "uptime": 3600
 }
 ```
-
-## 🔒 Security Features
-
-- **Password Security**: bcrypt with salt rounds of 12
-- **JWT Security**: Secure token generation with configurable expiration
-- **Rate Limiting**: 100 requests per 15 minutes globally, 15 requests per 15 minutes for calorie endpoint
-- **Input Validation**: Comprehensive validation for all endpoints
-- **CORS**: Configurable cross-origin resource sharing
-- **Helmet**: Security headers for Express apps
-- **Error Handling**: No sensitive data exposure in error responses
